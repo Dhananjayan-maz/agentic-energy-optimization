@@ -1,77 +1,215 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../Services/api";
 
 function Register() {
-    const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
-        username: "",
+        name: "",
         email: "",
         password: "",
+        confirmPassword: "",
     });
 
-    const handleChange = (e) => {
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        setFormData((previous) => ({
+            ...previous,
+            [name]: value,
+        }));
+
+        setError("");
+        setSuccess("");
+    };
+
+    const handleRegister = (event) => {
+        event.preventDefault();
+
+        const {
+            name,
+            email,
+            password,
+            confirmPassword,
+        } = formData;
+
+        if (!name || !email || !password || !confirmPassword) {
+            setError("Please fill in all fields.");
+            return;
+        }
+
+        if (password.length < 6) {
+            setError(
+                "Password must contain at least 6 characters."
+            );
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match.");
+            return;
+        }
+
+        // Store temporary frontend account.
+        // This will later be replaced by the backend API.
+        const user = {
+            name,
+            email,
+            password,
+        };
+
+        localStorage.setItem(
+            "registeredUser",
+            JSON.stringify(user)
+        );
+
+        setSuccess(
+            "Registration successful. You can now login."
+        );
+
         setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            await api.post("/auth/register/", formData);
-
-            alert("Registration successful");
-
-            navigate("/login");
-        } catch (error) {
-            console.error(error);
-            alert("Registration failed");
-        }
+    const goToLogin = () => {
+        window.location.href = "/login";
     };
 
     return (
-        <div>
-            <h2>Register</h2>
+        <div className="auth-page">
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={formData.username}
-                    onChange={handleChange}
-                />
+            <div className="auth-card">
 
-                <br />
+                <div className="auth-brand">
+                    <div className="auth-logo">
+                        ⚡
+                    </div>
 
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
+                    <div>
+                        <h1>Smart Energy</h1>
+                        <p>Energy Intelligence Platform</p>
+                    </div>
+                </div>
 
-                <br />
+                <div className="auth-heading">
+                    <p className="auth-eyebrow">
+                        CREATE ACCOUNT
+                    </p>
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                />
+                    <h2>Register</h2>
 
-                <br />
+                    <p>
+                        Create your account to access the
+                        energy monitoring dashboard.
+                    </p>
+                </div>
 
-                <button type="submit">
-                    Register
-                </button>
-            </form>
+                {error && (
+                    <div className="auth-message error">
+                        {error}
+                    </div>
+                )}
+
+                {success && (
+                    <div className="auth-message success">
+                        {success}
+                    </div>
+                )}
+
+                <form
+                    className="auth-form"
+                    onSubmit={handleRegister}
+                >
+
+                    <div className="form-group">
+                        <label htmlFor="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Enter your name"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="password">
+                            Password
+                        </label>
+
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="Create a password"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="Confirm your password"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <button
+                        className="auth-button"
+                        type="submit"
+                    >
+                        Create Account
+                    </button>
+
+                </form>
+
+                <div className="auth-footer">
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <button
+                        type="button"
+                        className="auth-link"
+                        onClick={goToLogin}
+                    >
+                        Login
+                    </button>
+                </div>
+
+            </div>
+
         </div>
     );
 }

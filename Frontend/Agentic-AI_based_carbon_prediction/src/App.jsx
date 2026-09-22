@@ -1,31 +1,24 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+    const path = window.location.pathname;
+
+    if (path === "/login") {
+        return <Login />;
+    }
+
+    if (path === "/register") {
+        return <Register />;
+    }
+
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-        </BrowserRouter>
+        <ProtectedRoute>
+            <Dashboard />
+        </ProtectedRoute>
     );
 }
 
 export default App;
-
-// function App() {
-//   return (
-//     <div>
-//       <h1>Energy Monitoring Project</h1>
-//       <p>React is working!</p>
-//     </div>
-//   )
-// }
-
-// export default App
