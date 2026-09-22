@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
 import MetricCard from "../components/Dashboard/MetricCard";
@@ -13,6 +14,8 @@ import ErrorMessage from "../components/Common/ErrorMessage";
 import { getDashboardData } from "../Services/api";
 
 function Dashboard() {
+    const navigate = useNavigate();
+
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -25,7 +28,7 @@ function Dashboard() {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
 
-        window.location.href = "/login";
+        navigate("/login");
     };
 
     // ------------------------------------------
@@ -119,10 +122,12 @@ function Dashboard() {
             </div>
 
             {/* ==================================
-                CURRENT ENERGY METRICS
+                CURRENT ENERGY & ENVIRONMENT
             ================================== */}
 
             <section className="metrics-grid">
+
+                {/* Energy Consumption */}
 
                 <MetricCard
                     title="Energy Consumption"
@@ -133,6 +138,8 @@ function Dashboard() {
                     type="energy"
                 />
 
+                {/* Solar Generation */}
+
                 <MetricCard
                     title="Solar Generation"
                     value={metrics.solar}
@@ -141,6 +148,8 @@ function Dashboard() {
                     description="Current renewable generation"
                     type="solar"
                 />
+
+                {/* Grid Contribution */}
 
                 <MetricCard
                     title="Grid Contribution"
@@ -151,6 +160,8 @@ function Dashboard() {
                     type="grid"
                 />
 
+                {/* Temperature */}
+
                 <MetricCard
                     title="Temperature"
                     value={metrics.temperature}
@@ -160,13 +171,37 @@ function Dashboard() {
                     type="temperature"
                 />
 
+                {/* Humidity */}
+
+                <MetricCard
+                    title="Humidity"
+                    value={metrics.humidity}
+                    unit=" %"
+                    icon="💧"
+                    description="Current relative humidity"
+                    type="humidity"
+                />
+
+                {/* Solar Irradiance */}
+
+                <MetricCard
+                    title="Solar Irradiance"
+                    value={metrics.irradiance}
+                    unit=" W/m²"
+                    icon="☀"
+                    description="Current solar radiation"
+                    type="irradiance"
+                />
+
             </section>
 
             {/* ==================================
                 SENSOR STATUS
             ================================== */}
 
-            <SensorStatus sensors={data.sensors} />
+            <SensorStatus
+                sensors={data.sensors}
+            />
 
             {/* ==================================
                 HISTORICAL ENERGY

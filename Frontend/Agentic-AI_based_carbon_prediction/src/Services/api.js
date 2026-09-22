@@ -1,6 +1,9 @@
 import axios from "axios";
 
-// Backend API
+// =====================================================
+// BACKEND API CONFIGURATION
+// =====================================================
+
 const api = axios.create({
     baseURL: "http://127.0.0.1:8000",
     headers: {
@@ -8,7 +11,11 @@ const api = axios.create({
     },
 });
 
-// Automatically attach JWT access token
+
+// =====================================================
+// JWT ACCESS TOKEN INTERCEPTOR
+// =====================================================
+
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("access");
@@ -24,11 +31,17 @@ api.interceptors.request.use(
     }
 );
 
-// -----------------------------
-// Phase 1 Mock Dashboard Data
-// -----------------------------
+
+// =====================================================
+// PHASE 1 MOCK DASHBOARD DATA
+// =====================================================
 
 const mockDashboardData = {
+
+    // -------------------------------------------------
+    // CURRENT METRICS
+    // -------------------------------------------------
+
     metrics: {
         energy: 245.6,
         solar: 132.4,
@@ -38,12 +51,22 @@ const mockDashboardData = {
         irradiance: 742,
     },
 
+
+    // -------------------------------------------------
+    // SENSOR STATUS
+    // -------------------------------------------------
+
     sensors: {
         energy: true,
         solar: true,
         temperature: true,
         humidity: true,
     },
+
+
+    // -------------------------------------------------
+    // HISTORICAL ENERGY DATA
+    // -------------------------------------------------
 
     energyHistory: [
         { time: "06:00", value: 180 },
@@ -58,6 +81,11 @@ const mockDashboardData = {
         { time: "15:00", value: 245 },
     ],
 
+
+    // -------------------------------------------------
+    // HISTORICAL SOLAR DATA
+    // -------------------------------------------------
+
     solarHistory: [
         { time: "06:00", value: 20 },
         { time: "07:00", value: 40 },
@@ -71,6 +99,11 @@ const mockDashboardData = {
         { time: "15:00", value: 110 },
     ],
 
+
+    // -------------------------------------------------
+    // ENERGY FORECAST
+    // -------------------------------------------------
+
     energyForecast: [
         { time: "16:00", value: 250 },
         { time: "17:00", value: 245 },
@@ -79,6 +112,11 @@ const mockDashboardData = {
         { time: "20:00", value: 215 },
         { time: "21:00", value: 210 },
     ],
+
+
+    // -------------------------------------------------
+    // SOLAR FORECAST
+    // -------------------------------------------------
 
     solarForecast: [
         { time: "16:00", value: 95 },
@@ -90,7 +128,11 @@ const mockDashboardData = {
     ],
 };
 
-// Simulate a small delay
+
+// =====================================================
+// SIMULATED API REQUEST
+// =====================================================
+
 const simulateRequest = (data, delay = 500) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -99,34 +141,72 @@ const simulateRequest = (data, delay = 500) => {
     });
 };
 
-// Dashboard functions
+
+// =====================================================
+// DASHBOARD API FUNCTIONS
+// =====================================================
+
 export const getDashboardData = async () => {
     return simulateRequest(mockDashboardData);
 };
+
+
+// =====================================================
+// CURRENT METRICS
+// =====================================================
 
 export const getCurrentMetrics = async () => {
     return simulateRequest(mockDashboardData.metrics);
 };
 
+
+// =====================================================
+// SENSOR STATUS
+// =====================================================
+
 export const getSensorStatus = async () => {
     return simulateRequest(mockDashboardData.sensors);
 };
+
+
+// =====================================================
+// ENERGY HISTORY
+// =====================================================
 
 export const getEnergyHistory = async () => {
     return simulateRequest(mockDashboardData.energyHistory);
 };
 
+
+// =====================================================
+// SOLAR HISTORY
+// =====================================================
+
 export const getSolarHistory = async () => {
     return simulateRequest(mockDashboardData.solarHistory);
 };
+
+
+// =====================================================
+// ENERGY FORECAST
+// =====================================================
 
 export const getEnergyForecast = async () => {
     return simulateRequest(mockDashboardData.energyForecast);
 };
 
+
+// =====================================================
+// SOLAR FORECAST
+// =====================================================
+
 export const getSolarForecast = async () => {
     return simulateRequest(mockDashboardData.solarForecast);
 };
 
-// Default Axios API instance
+
+// =====================================================
+// DEFAULT AXIOS INSTANCE
+// =====================================================
+
 export default api;
