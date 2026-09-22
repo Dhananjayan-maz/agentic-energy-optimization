@@ -24,10 +24,10 @@ function Login() {
         try {
             setLoading(true);
 
-            const response = await api.post("/auth/login/", {
+            const response = await api.post("/api/auth/login/", {
                 username,
                 password,
-            });
+                });
 
             localStorage.setItem(
                 "access",

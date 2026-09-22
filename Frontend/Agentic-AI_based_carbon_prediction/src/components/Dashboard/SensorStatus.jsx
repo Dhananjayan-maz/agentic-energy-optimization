@@ -1,42 +1,99 @@
-function SensorStatus({ sensors = [] }) {
-  return (
-    <section className="dashboard-section sensor-section">
-      <div className="section-heading">
-        <div>
-          <p className="section-label">MONITORING</p>
-          <h2>Sensor Status</h2>
-        </div>
+function SensorStatus({ sensors }) {
+    if (!sensors) {
+        return null;
+    }
 
-        <span className="live-badge">
-          <span className="status-dot"></span>
-          Live
-        </span>
-      </div>
+    const sensorList = [
+        {
+            key: "energy",
+            name: "Energy Sensor",
+            icon: "⚡",
+        },
+        {
+            key: "solar",
+            name: "Solar Sensor",
+            icon: "☀",
+        },
+        {
+            key: "temperature",
+            name: "Temperature Sensor",
+            icon: "🌡",
+        },
+        {
+            key: "humidity",
+            name: "Humidity Sensor",
+            icon: "💧",
+        },
+    ];
 
-      <div className="sensor-grid">
-        {sensors.map((sensor) => (
-          <div className="sensor-card" key={sensor.name}>
-            <div className="sensor-card-header">
-              <span className="sensor-name">{sensor.name}</span>
+    return (
+        <section className="sensor-section">
 
-              <span
-                className={`sensor-status ${
-                  sensor.status === "online" ? "online" : "offline"
-                }`}
-              >
-                <span></span>
-                {sensor.status === "online" ? "Online" : "Offline"}
-              </span>
+            <div className="section-heading">
+                <div>
+                    <p className="section-eyebrow">
+                        SENSOR MONITORING
+                    </p>
+
+                    <h2>
+                        Sensor Status
+                    </h2>
+
+                    <p>
+                        Current connectivity status of the
+                        smart energy monitoring sensors.
+                    </p>
+                </div>
             </div>
 
-            <div className="sensor-value">{sensor.value}</div>
+            <div className="sensor-grid">
 
-            <p>Updated {sensor.lastUpdated}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
+                {sensorList.map((sensor) => {
+
+                    const isOnline = Boolean(
+                        sensors[sensor.key]
+                    );
+
+                    return (
+                        <div
+                            className="sensor-card"
+                            key={sensor.key}
+                        >
+
+                            <div className="sensor-icon">
+                                {sensor.icon}
+                            </div>
+
+                            <div className="sensor-info">
+
+                                <h3>
+                                    {sensor.name}
+                                </h3>
+
+                                <div
+                                    className={
+                                        isOnline
+                                            ? "sensor-status online"
+                                            : "sensor-status offline"
+                                    }
+                                >
+                                    <span className="status-dot"></span>
+
+                                    {isOnline
+                                        ? "Online"
+                                        : "Offline"}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    );
+                })}
+
+            </div>
+
+        </section>
+    );
 }
 
 export default SensorStatus;
