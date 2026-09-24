@@ -12,9 +12,9 @@ from sklearn.metrics import (
     r2_score
 )
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
-from tensorflow.keras.callbacks import EarlyStopping
+from keras.models import Sequential
+from keras.layers import LSTM, Dense, Dropout
+from keras.callbacks import EarlyStopping
 
 
 # ============================================================
