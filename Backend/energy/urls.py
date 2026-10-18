@@ -5,28 +5,18 @@ from .views import (
     EnergyReadingViewSet,
     energy_forecast,
     solar_forecast,
+    dashboard_data,
+    energy_history,
 )
-
 
 router = DefaultRouter()
 
-router.register(
-    r'energy-readings',
-    EnergyReadingViewSet,
-    basename='energy-reading'
-)
+router.register(r"energy-readings", EnergyReadingViewSet, basename="energy-reading")
 
 
 urlpatterns = router.urls + [
-    path(
-        'forecast/energy/',
-        energy_forecast,
-        name='energy-forecast'
-    ),
-
-    path(
-        'forecast/solar/',
-        solar_forecast,
-        name='solar-forecast'
-    ),
+    path("forecast/energy/", energy_forecast, name="energy-forecast"),
+    path("forecast/solar/", solar_forecast, name="solar-forecast"),
+    path('dashboard/', dashboard_data, name='dashboard-data'),
+    path('history/', energy_history, name='energy-history'),
 ]

@@ -46,7 +46,6 @@ feature_scaler = joblib.load(FEATURE_SCALER_PATH)
 
 target_scaler = joblib.load(TARGET_SCALER_PATH)
 
-
 # --------------------------------------------------
 # Feature order used during training
 # --------------------------------------------------

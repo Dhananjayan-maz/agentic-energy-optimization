@@ -31,6 +31,7 @@ numpy==2.4.6
 opt_einsum==3.4.0
 optree==0.20.0
 packaging==26.3
+paho-mqtt==2.1.0
 pandas==3.0.6
 pillow==12.3.0
 protobuf==7.36.2
