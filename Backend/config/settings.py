@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'energy',
     'users',
+    "iot",
     
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,13 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from .views import (
-    EnergyReadingViewSet,
-    energy_forecast,
-    solar_forecast,
-    dashboard_data,
-    energy_history,
-)
+from .views import *
 
 router = DefaultRouter()
 
@@ -19,4 +13,5 @@ urlpatterns = router.urls + [
     path("forecast/solar/", solar_forecast, name="solar-forecast"),
     path('dashboard/', dashboard_data, name='dashboard-data'),
     path('history/', energy_history, name='energy-history'),
+    path('live/', live_monitoring, name='live-monitoring'),
 ]
