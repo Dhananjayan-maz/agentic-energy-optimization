@@ -14,4 +14,6 @@ urlpatterns = router.urls + [
     path('dashboard/', dashboard_data, name='dashboard-data'),
     path('history/', energy_history, name='energy-history'),
     path('live/', live_monitoring, name='live-monitoring'),
+    path("data-quality/", data_quality, name="data-quality"),
+    path("live-forecast/", live_forecast, name="live_forecast"),
 ]

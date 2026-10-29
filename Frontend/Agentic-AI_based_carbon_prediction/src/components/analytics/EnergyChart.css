@@ -1,0 +1,80 @@
+
+.energy-chart-panel {
+    min-width: 0;
+    overflow: hidden;
+    padding: 22px;
+}
+
+.energy-chart-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.energy-chart-heading h2 {
+    margin: 5px 0 8px;
+    color: #172033;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.energy-chart-heading p:last-child {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.energy-chart-unit {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #ecfdf5;
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.energy-chart-canvas {
+    width: 100%;
+    height: 320px;
+    min-width: 0;
+    margin-top: 24px;
+}
+
+.energy-chart-message {
+    display: grid;
+    min-height: 220px;
+    place-items: center;
+    color: #64748b;
+    font-size: 14px;
+    text-align: center;
+}
+
+.energy-chart-error {
+    color: #b91c1c;
+}
+
+.energy-chart-footer {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #edf0f5;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .energy-chart-panel {
+        padding: 16px;
+    }
+
+    .energy-chart-canvas {
+        height: 260px;
+    }
+
+    .energy-chart-heading h2 {
+        font-size: 17px;
+    }
+}

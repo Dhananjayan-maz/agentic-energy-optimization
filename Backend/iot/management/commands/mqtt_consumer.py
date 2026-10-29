@@ -1,14 +1,14 @@
 import json
 import logging
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import paho.mqtt.client as mqtt
 from django.core.management.base import BaseCommand
 from django.db import close_old_connections
 from django.utils import timezone as django_timezone
 
-from energy.models import EnergyReading
+from energy.models import DataQualityEvent, EnergyReading
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +19,17 @@ TOPIC = "energy/readings"
 
 class Command(BaseCommand):
     help = "Subscribe to MQTT sensor readings and store them in Django"
+
+    def record_quality_event(self, event_type, reason, device_id="", details=""):
+        try:
+            DataQualityEvent.objects.create(
+                event_type=event_type,
+                reason=str(reason)[:255],
+                device_id=str(device_id or "")[:100],
+                details=str(details),
+            )
+        except Exception:
+            logger.exception("Failed to record data-quality event")
 
     def handle(self, *args, **options):
         client = mqtt.Client(
@@ -37,6 +48,8 @@ class Command(BaseCommand):
 
         def on_message(client, userdata, message):
             close_old_connections()
+            
+            payload = None
 
             try:
                 payload = json.loads(message.payload.decode("utf-8"))
@@ -58,14 +71,61 @@ class Command(BaseCommand):
                 if missing:
                     raise ValueError(f"Missing fields: {missing}")
 
-                timestamp = datetime.fromisoformat(
-                    payload["timestamp"].replace("Z", "+00:00")
-                )
+                timestamp_value = payload["timestamp"]
+
+                if not isinstance(timestamp_value, str):
+                    raise ValueError("Timestamp must be a string")
+                
+                try:
+                    timestamp = datetime.fromisoformat(
+                        timestamp_value.replace("Z", "+00:00")
+                    )
+                except ValueError:
+                    raise ValueError("Timestamp must be a valid ISO 8601 datetime")
+                
+                if timestamp.tzinfo is None or timestamp.utcoffset() is None:
+                    raise ValueError("Timestamp must include a timezone")
+                
+                timestamp = timestamp.astimezone(timezone.utc)
 
                 if timestamp.tzinfo is None:
                     raise ValueError("Timestamp must include a timezone")
 
                 timestamp = timestamp.astimezone(timezone.utc)
+
+                now = datetime.now(timezone.utc)
+                allowed_delay = timedelta(minutes=5)
+                allowed_future_skew = timedelta(seconds=30)
+
+                
+                if timestamp < now - allowed_delay:
+                    delay_seconds = (now - timestamp).total_seconds()
+                    self.record_quality_event(
+                        event_type="rejected",
+                        reason="Delayed MQTT timestamp",
+                        device_id=str(payload.get("device_id", "")),
+                        details=f"Timestamp: {timestamp}; delay: {delay_seconds:.1f} seconds",
+                    )
+                    self.stderr.write(
+                        f"Rejected delayed MQTT message: timestamp={timestamp}, "
+                        f"delay={delay_seconds:.1f} seconds"
+                    )
+                    return
+                
+                if timestamp > now + allowed_future_skew:
+                    ahead_seconds = (timestamp - now).total_seconds()
+                    self.record_quality_event(
+                        event_type="rejected",
+                        reason="Future MQTT timestamp",
+                        device_id=str(payload.get("device_id", "")),
+                        details=f"Timestamp: {timestamp}; ahead by: {ahead_seconds:.1f} seconds",
+                    )
+                    self.stderr.write(
+                        f"Rejected future MQTT message: timestamp={timestamp}, "
+                        f"ahead_by={ahead_seconds:.1f} seconds"
+                    )
+                    return
+                
 
                 values = {}
 
@@ -92,6 +152,12 @@ class Command(BaseCommand):
                     timestamp=timestamp,
                     data_source="simulator",
                 ).exists():
+                    self.record_quality_event(
+                        event_type="duplicate",
+                        reason="Duplicate MQTT reading",
+                        device_id=device_id,
+                        details=f"Duplicate timestamp: {timestamp}",
+                    )
                     self.stdout.write(
                         f"Skipped duplicate reading from {device_id} at {timestamp}"
                     )
@@ -114,8 +180,21 @@ class Command(BaseCommand):
                     self.style.SUCCESS(f"Saved reading #{reading.pk} at {timestamp}")
                 )
 
+            
             except (ValueError, TypeError, KeyError, json.JSONDecodeError) as exc:
+                
+                device_id = ""
+                if isinstance(payload, dict):
+                    device_id = str(payload.get("device_id", "") or "").strip()
+                
+                self.record_quality_event(
+                    event_type="rejected",
+                    reason=str(exc),
+                    device_id=device_id,
+                    details=f"Topic: {message.topic}",
+                )
                 self.stderr.write(f"Rejected MQTT message: {exc}")
+
             except Exception:
                 logger.exception("Failed to process MQTT message")
             finally:

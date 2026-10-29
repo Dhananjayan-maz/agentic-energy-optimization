@@ -1,0 +1,126 @@
+
+.historical-summary-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+    margin-bottom: 24px;
+}
+
+.historical-summary-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.historical-summary-heading h2 {
+    margin: 5px 0 8px;
+    color: #172033;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.historical-summary-heading > div > p:last-child {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.historical-summary-period {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.historical-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.historical-metric-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 0;
+    padding: 20px;
+}
+
+.historical-metric-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.historical-metric-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #ecfdf5;
+    color: #15803d;
+    font-size: 21px;
+}
+
+.historical-metric-label {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.historical-metric-value {
+    overflow-wrap: anywhere;
+    color: #172033;
+    font-size: clamp(21px, 2vw, 29px);
+    font-weight: 750;
+    letter-spacing: -0.8px;
+}
+
+.historical-metric-detail {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.historical-summary-message,
+.historical-summary-error {
+    padding: 20px;
+    border-radius: 12px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.historical-summary-error {
+    color: #b91c1c;
+    background: #fef2f2;
+}
+
+@media (max-width: 1100px) {
+    .historical-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .historical-summary-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .historical-metric-card {
+        padding: 16px;
+    }
+
+    .historical-summary-heading h2 {
+        font-size: 20px;
+    }
+}

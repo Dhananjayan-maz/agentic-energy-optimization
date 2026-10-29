@@ -1,0 +1,150 @@
+
+.page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.page-header-main {
+    min-width: 0;
+}
+
+.page-header-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 20px;
+    color: #8792a5;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.page-header-separator {
+    color: #c0c8d4;
+}
+
+.page-header-current {
+    color: #46546a;
+}
+
+.page-header-eyebrow {
+    margin: 0 0 8px;
+    color: #4776e6;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+    line-height: 1.5;
+}
+
+.page-header-title {
+    margin: 0;
+    color: #17243a;
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 750;
+    letter-spacing: -1.1px;
+    line-height: 1.2;
+}
+
+.page-header-description {
+    max-width: 650px;
+    margin: 10px 0 0;
+    color: #758197;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.page-header-side {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.page-header-update {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 54px;
+    padding: 10px 15px;
+    border: 1px solid #e7ebf2;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.page-header-update-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #19b981;
+    box-shadow: 0 0 0 4px rgba(25, 185, 129, 0.12);
+}
+
+.page-header-update-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.page-header-update-label {
+    color: #8490a2;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.page-header-update-text strong {
+    color: #26354b;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.page-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width: 900px) {
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .page-header-side {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-header {
+        margin-bottom: 22px;
+    }
+
+    .page-header-breadcrumb {
+        margin-bottom: 15px;
+    }
+
+    .page-header-title {
+        font-size: 27px;
+        letter-spacing: -0.7px;
+    }
+
+    .page-header-description {
+        font-size: 13px;
+    }
+
+    .page-header-side {
+        width: 100%;
+    }
+
+    .page-header-update {
+        min-height: 48px;
+    }
+}

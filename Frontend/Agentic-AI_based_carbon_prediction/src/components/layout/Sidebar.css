@@ -1,0 +1,223 @@
+/* Sidebar is fixed to the viewport; it does not scroll with page content. */
+.energiq-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: 264px;
+  height: 100dvh;
+  padding: 28px 18px 18px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #eaf1f5;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(35, 190, 151, 0.12), transparent 34%),
+    #142331;
+  border-right: 1px solid rgba(224, 239, 246, 0.08);
+  scrollbar-width: thin;
+  scrollbar-color: #40515d transparent;
+}
+
+.energiq-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 8px;
+  margin-bottom: 42px;
+}
+
+.energiq-brand-mark {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  color: #102a2b;
+  background: linear-gradient(145deg, #70edc7, #2dc7a0);
+  border-radius: 13px;
+  box-shadow: 0 7px 22px rgba(45, 199, 160, 0.18);
+}
+
+.energiq-brand-mark span {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.energiq-brand-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+}
+
+.energiq-brand-name {
+  color: #f7fbfd;
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+  line-height: 1.1;
+}
+
+.energiq-brand-caption {
+  color: #8fa4b2;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.15px;
+  white-space: nowrap;
+}
+
+.energiq-nav-label {
+  padding: 0 12px;
+  margin-bottom: 12px;
+  color: #8195a4;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1.45px;
+}
+
+.energiq-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.energiq-nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 13px;
+  color: #aebdc7;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.energiq-nav-link:hover {
+  color: #f5fbfd;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.energiq-nav-link:focus-visible {
+  outline: 2px solid #4cddba;
+  outline-offset: 3px;
+}
+
+.energiq-nav-link.is-active {
+  color: #75ebc7;
+  background: rgba(52, 201, 162, 0.12);
+  border-color: rgba(80, 221, 184, 0.16);
+}
+
+.energiq-nav-symbol {
+  display: grid;
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: currentColor;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.energiq-nav-live-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  background: #4cddba;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(76, 221, 186, 0.1);
+}
+
+.energiq-sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding: 18px 9px 4px;
+  border-top: 1px solid rgba(224, 239, 246, 0.1);
+}
+
+.energiq-system-indicator {
+  flex: 0 0 8px;
+  width: 8px;
+  height: 8px;
+  background: #4cddba;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(76, 221, 186, 0.1);
+}
+
+.energiq-system-title {
+  color: #dce7ec;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.energiq-system-subtitle {
+  margin-top: 3px;
+  color: #8195a4;
+  font-size: 10px;
+}
+
+@media (max-width: 760px) {
+  .energiq-sidebar {
+    width: 76px;
+    align-items: center;
+    padding: 18px 9px 14px;
+  }
+
+  .energiq-brand {
+    justify-content: center;
+    padding: 0;
+    margin-bottom: 32px;
+  }
+
+  .energiq-brand-copy,
+  .energiq-nav-label,
+  .energiq-nav-link > span:not(.energiq-nav-symbol),
+  .energiq-sidebar-footer > div:not(.energiq-system-indicator) {
+    display: none;
+  }
+
+  .energiq-nav-link {
+    justify-content: center;
+    width: 54px;
+    padding: 0;
+  }
+
+  .energiq-nav-symbol {
+    flex-basis: auto;
+  }
+
+  .energiq-nav-live-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 5px;
+    height: 5px;
+    margin: 0;
+  }
+
+  .energiq-sidebar-footer {
+    justify-content: center;
+    width: 100%;
+    padding: 18px 0 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .energiq-nav-link {
+    transition: none;
+  }
+}

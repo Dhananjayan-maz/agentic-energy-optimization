@@ -1,8 +1,33 @@
+
 * {
     box-sizing: border-box;
 }
 
+html {
+    min-width: 320px;
+    min-height: 100%;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    min-width: 320px;
+    min-height: 100vh;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(71, 118, 230, 0.55);
+    outline-offset: 3px;
+}
+
+#root {
+    min-height: 100vh;
 }

@@ -1,0 +1,39 @@
+/*
+  Shared application frame.
+  The sidebar is fixed; only the main workspace content scrolls.
+*/
+.energiq-app-shell {
+  min-height: 100vh;
+  background: #f5f8fa;
+}
+
+.energiq-main-content {
+  min-height: 100vh;
+  min-width: 0;
+  margin-left: 264px;
+  padding: 34px clamp(22px, 3vw, 46px) 48px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .energiq-main-content {
+    margin-left: 76px;
+    padding: 24px 16px 36px;
+  }
+}
+
+
+.energiq-main-content {
+    margin-left: 264px;
+    width: calc(100% - 264px);
+    min-width: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+@media (max-width: 760px) {
+    .energiq-main-content {
+        margin-left: 76px;
+        width: calc(100% - 76px);
+    }
+}

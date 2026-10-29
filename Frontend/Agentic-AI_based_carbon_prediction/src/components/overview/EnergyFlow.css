@@ -1,0 +1,380 @@
+
+/*
+ * EnergyFlow — larger, readable typography.
+ * Scoped to EnergyFlow so other dashboard pages remain unchanged.
+ */
+
+.energy-flow-panel {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.energy-flow-panel .panel-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.energy-flow-panel .panel-heading .eyebrow {
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: 0.09em;
+}
+
+.energy-flow-panel .panel-heading h2 {
+    font-size: clamp(26px, 2.2vw, 32px);
+    line-height: 1.25;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+.energy-flow-panel .panel-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 8px;
+}
+
+.energy-flow-panel .status-pill {
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 8px 13px;
+}
+
+.energy-flow-panel .flow-visual {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.energy-flow-panel .flow-node,
+.energy-flow-panel .flow-core {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.energy-flow-panel .flow-node-icon,
+.energy-flow-panel .flow-core-icon {
+    font-size: 30px;
+    line-height: 1.3;
+}
+
+.energy-flow-panel .flow-node-label {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.energy-flow-panel .flow-node > strong {
+    display: block;
+    font-size: clamp(23px, 2.2vw, 30px);
+    line-height: 1.35;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.energy-flow-panel .flow-node > strong small {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.energy-flow-panel .flow-node-caption {
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.energy-flow-panel .flow-connector-caption {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.energy-flow-panel .flow-connector-arrow {
+    font-size: 28px;
+}
+
+.energy-flow-panel .flow-core > strong {
+    display: block;
+    font-size: 21px;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+.energy-flow-panel .flow-core > span {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.energy-flow-panel .flow-disclaimer {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.energy-flow-panel .live-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 26px;
+}
+
+.energy-flow-panel .live-detail {
+    min-width: 0;
+    padding: 18px;
+    box-sizing: border-box;
+}
+
+.energy-flow-panel .live-detail > span {
+    display: block;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.energy-flow-panel .live-detail > strong {
+    display: block;
+    font-size: 25px;
+    line-height: 1.4;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.energy-flow-panel .live-detail > strong small {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.energy-flow-panel .reading-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 14px 26px;
+    min-width: 0;
+    margin-top: 24px;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.energy-flow-panel .reading-meta > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.energy-flow-panel .reading-meta strong {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.energy-flow-panel .inline-alert,
+.energy-flow-panel .empty-state {
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+@media (max-width: 800px) {
+    .energy-flow-panel .live-details-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .energy-flow-panel .live-detail {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .energy-flow-panel .panel-heading {
+        align-items: flex-start;
+    }
+
+    .energy-flow-panel .panel-heading h2 {
+        font-size: 26px;
+    }
+
+    .energy-flow-panel .panel-description {
+        font-size: 15px;
+    }
+
+    .energy-flow-panel .live-details-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .energy-flow-panel .live-detail > strong {
+        font-size: 23px;
+    }
+
+    .energy-flow-panel .reading-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .energy-flow-panel .flow-disclaimer {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   ENERGY FLOW — ALIGNMENT AND CONNECTOR FIX
+   Add this block at the bottom of EnergyFlow.css
+   ========================================================= */
+
+/* Give the three nodes and two connectors a balanced layout */
+.energy-flow-panel .flow-visual {
+    display: grid !important;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(90px, 0.26fr)
+        minmax(0, 1fr)
+        minmax(90px, 0.26fr)
+        minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Keep all three energy nodes consistently sized */
+.energy-flow-panel .flow-node,
+.energy-flow-panel .flow-core {
+    width: 100%;
+    min-width: 0;
+    min-height: 190px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 12px;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+/* Make the solar and consumption values stay together */
+.energy-flow-panel .flow-node > strong {
+    white-space: nowrap;
+    font-size: clamp(22px, 1.8vw, 30px);
+}
+
+.energy-flow-panel .flow-node > strong small {
+    font-size: 15px;
+}
+
+/* Align the connector line, arrow and caption */
+.energy-flow-panel .flow-connector {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    justify-items: stretch;
+    gap: 6px 4px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Horizontal line */
+.energy-flow-panel .flow-connector-line {
+    grid-column: 1;
+    grid-row: 1;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 2px;
+    background: #b9c9e2;
+}
+
+/* Arrow stays at the end of the line */
+.energy-flow-panel .flow-connector-arrow {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    font-size: 25px;
+    line-height: 1;
+    color: #91a9d0;
+}
+
+/* Keep connector labels on one line */
+.energy-flow-panel .flow-connector-caption {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Prevent long labels or values from forcing the grid wider */
+.energy-flow-panel .flow-node-label,
+.energy-flow-panel .flow-node-caption,
+.energy-flow-panel .flow-core > strong,
+.energy-flow-panel .flow-core > span {
+    max-width: 100%;
+    overflow-wrap: normal;
+    word-break: normal;
+    text-align: center;
+}
+
+/* Tablet: use narrower connectors */
+@media (max-width: 1000px) {
+    .energy-flow-panel .flow-visual {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(68px, 0.24fr)
+            minmax(0, 1fr)
+            minmax(68px, 0.24fr)
+            minmax(0, 1fr);
+        gap: 8px;
+    }
+
+    .energy-flow-panel .flow-node,
+    .energy-flow-panel .flow-core {
+        padding: 16px 8px;
+        min-height: 175px;
+    }
+
+    .energy-flow-panel .flow-connector-caption {
+        font-size: 12px;
+    }
+}
+
+/* Mobile: stack nodes and connectors vertically */
+@media (max-width: 650px) {
+    .energy-flow-panel .flow-visual {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .energy-flow-panel .flow-node,
+    .energy-flow-panel .flow-core {
+        min-height: 150px;
+        width: 100%;
+    }
+
+    .energy-flow-panel .flow-connector {
+        width: 100%;
+        max-width: 220px;
+        justify-self: center;
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .energy-flow-panel .flow-connector-line {
+        width: 100%;
+    }
+
+    .energy-flow-panel .flow-connector-caption {
+        white-space: normal;
+    }
+}
